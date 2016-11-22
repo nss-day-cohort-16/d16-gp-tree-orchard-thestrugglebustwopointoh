@@ -1,5 +1,7 @@
 "use strict";
 
+let counter = 0;
+
 /// BASE TREE - DO NOT TOUCH
 let Tree = function(){
 	this.branches = 0;
@@ -14,67 +16,60 @@ let Plant = function(){
 //Tree is a plant! Woo!
 Tree.prototype = new Plant();
 
-
-
-Plant.prototype.increaseHeight = function (heightIncrease) {
+Plant.prototype.increaseHeight = function(heightIncrease) {
 	this.height += heightIncrease;
 };
 
 
-Plant.prototype.decreaseHeight = function (heightDecrease) {
+Plant.prototype.decreaseHeight = function(heightDecrease) {
 	this.height -= heightDecrease;
 };
 
 
-Tree.prototype.grow = function (growHeight) {
-	this.height += growHeight;
+Tree.prototype.grow = function(growHeight) {
+	this.increaseHeight(growHeight);
 	
-	if(PearTree.height % 10 === 0) {
-    	console.log("woo! add a branch");
-    	PearTree.branches += 1;
-    	//trimTree();
+	if(this.height % 10 === 0) {
+    	this.branches += 1;
     }
 	
-	//grow should be calling increaseHeight.
-	//and checking for trim.
+	this.trim(1);
 };
 
 
-Tree.prototype.trim = function (branchDecrease) {
-	this.height -= branchDecrease;
-	this.branches -= 1;
+Tree.prototype.trim = function(branchDecrease) {
+	 if ((counter + 1) % 10 === 0) {
+		this.height -= branchDecrease;
+		this.branches -= 1;
+		//console.log("Trim yo branches!");
+	}
 };
 
 
 let PearTree = new Tree();
 let OakTree = new Tree();
 
-//console.log(OakTree);
-
-let counter = 0;
-
-console.log(PearTree);
-
+//console.log("PearTree --> ", PearTree);
+//console.log("OakTree --> ", OakTree);
 
 function buildTree(){
 	
-	//console.log(counter);
-
 	PearTree.grow(2);
+	OakTree.grow(5);
 
-	console.log(`Pear Tree is now ${PearTree.height} inches tall and has ${PearTree.branches} branches.`);
+	document.getElementById("output").innerHTML += 
+	`Pear Tree is now ${PearTree.height} inches tall and has ${PearTree.branches} branches.<br>
+	 Oak Tree is now ${OakTree.height} inches tall and has ${OakTree.branches} branches.<br><br>`;
+	
+	//console.log(`Pear Tree is now ${PearTree.height} inches tall and has ${PearTree.branches} branches.`);
+	//console.log(`Oak Tree is now ${OakTree.height} inches tall and has ${OakTree.branches} branches.`);
 
-	// if(PearTree.height % 10 === 0) {
- //    	console.log("woo! add a branch");
- //    	PearTree.branches += 1;
- //    	//trimTree();
- //    }
-
-    if ((counter - 1) === 5) {
+    if ((counter + 1) === 30) {
 		clearInterval(setTimer);
 		console.log("timer stopped");
-		console.log(PearTree);
-	}
+		//console.log("Pear Tree-->", PearTree);
+		//console.log("Oak Tree-->", OakTree);
+	} 
 
 	counter ++;
 
